@@ -878,5 +878,50 @@
       }, 5000);
     </script>
   </body>
-  
+  <footer class="footer">
+    <!-- blobs -->
+    <div class="footer-blob footer-blob-left"></div>
+    <div class="footer-blob footer-blob-right"></div>
+
+    <div class="container mx-auto px-4">
+      <div class="footer-content text-center">
+        <!-- Icon -->
+        <div class="mb-4">
+          <div
+            class="w-10 h-10 bg-[#89B9AD] rounded-full flex items-center justify-center mx-auto text-white footer-icon"
+          >
+            <i class="fas fa-box-open text-lg"></i>
+          </div>
+        </div>
+        <!-- Copyright -->
+        <p class="text-gray-600">
+          © ${new Date().getFullYear()} HAPPYT.LK. All rights reserved.
+        </p>
+        <p class="text-sm text-[#89B9AD] mt-2 font-medium">
+          Made with <i class="fas fa-heart mx-1"></i> in Sri Lanka
+        </p>
+        <p class="text-sm text-[#89B9AD] mt-2 font-medium">
+          Develop by
+          <a
+            href="https://dinurasellapperuma.com"
+            class="font-bold"
+            target="_blank"
+            >D I X Y</a
+          >
+        </p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Auto Update copyright year
+        const yearElements = document.querySelectorAll(".footer-content");
+        yearElements.forEach((element) => {
+          element.innerHTML = element.innerHTML.replace(
+            "${new Date().getFullYear()}",
+            new Date().getFullYear()
+          );
+        });
+      });
+    </script>
+  </footer>
 </html>
