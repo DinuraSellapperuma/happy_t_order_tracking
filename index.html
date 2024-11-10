@@ -559,12 +559,164 @@
         });
 
       function displayResults(data) {
+        console.log("Received data:", data); // Add this line to inspect the data structure
+
         const resultDiv = document.getElementById("result");
-        const trackingUrl = `${window.location.origin}${window.location.pathname}?tracking=${data.order.waybill_number}`;
+        const trackingUrl = `${window.location.origin}${window.location.pathname}?tracking=${data.order.waybill_number}`; // Remove .data
 
         const orderDetails = `
-        <!-- order details section unchanged -->
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD]">Order Details</h2>
+                    <p class="text-gray-500 text-sm mt-1">Track ID: ${
+                      data.order.waybill_number
+                    }</p>
+                </div>
+                <div class="flex gap-3">
+                    <button 
+                        onclick="copyTrackingUrl('${trackingUrl}')"
+                        class="copy-button bg-[#89B9AD]/10 hover:bg-[#89B9AD]/20 text-[#89B9AD] rounded-xl px-4 py-2 text-sm flex items-center gap-2 transition-all duration-300"
+                    >
+                        <i class="fas fa-share-alt"></i>
+                        Share
+                    </button>
+              <!--      <button 
+                        onclick="window.print()"
+                        class="bg-[#89B9AD]/10 hover:bg-[#89B9AD]/20 text-[#89B9AD] rounded-xl px-4 py-2 text-sm flex items-center gap-2 transition-all duration-300"
+                    >
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button> -->
+                </div>
+            </div>
 
+            <!-- Order Information Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
+                <!-- Customer Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Customer</p>
+                            <p class="font-semibold text-[#89B9AD]">${
+                              data.order.customer_name
+                            }</p>
+                        </div>
+                    </div>
+                <!--    <p class="text-sm text-gray-500 ml-11">${
+                  data.order.customer_address || "Address not available"
+                }</p> -->
+                </div>
+
+                <!-- Package Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-box text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Package Details</p>
+                            <p class="font-semibold text-[#89B9AD]">${
+                              data.order.weight
+                            } kg</p>
+                        </div>
+                    </div>
+              <!--      <p class="text-sm text-gray-500 ml-11">Package Type: ${
+                data.order.package_type || "Standard"
+              }</p> -->
+                </div>
+
+                <!-- Payment Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-money-bill text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Payment</p>
+                            <p class="font-semibold text-[#89B9AD]">COD: ${
+                              data.order.cod
+                            } LKR</p>
+                        </div>
+                    </div>
+               <!--     <p class="text-sm text-gray-500 ml-11">Payment Status: ${
+                 data.order.payment_status || "Pending"
+               }</p> -->
+                </div>
+
+                <!-- Merchant/Sender Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-store text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Store</p>
+                            <p class="font-semibold text-[#89B9AD]">${
+                              data.order.merchant || "Happy T Store"
+                            }</p>
+                        </div>
+                    </div>
+               <!--     <p class="text-sm text-gray-500 ml-11">${
+                 data.order.sender_address || "Main Branch"
+               }</p> -->
+                </div>
+
+                <!-- Tracking Number -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-barcode text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Tracking Number</p>
+                            <p class="font-semibold text-[#89B9AD]">${
+                              data.order.waybill_number
+                            }</p>
+                        </div>
+                    </div>
+                <!--    <p class="text-sm text-gray-500 ml-11">Track your package status</p> -->
+                </div>
+
+                <!-- Current Status -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-info-circle text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Current Status</p>
+                            <p class="font-semibold text-[#89B9AD]">${
+                              data.timeline[0]?.status?.name || "Processing"
+                            }</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 ml-11">Last Updated: ${
+                      data.timeline[0]?.date_time_ago || "Recently"
+                    }</p>
+                </div>
+            </div>
+
+            <!-- Order Notes (if any) -->
+            ${
+              data.order.notes
+                ? `
+            <div class="bg-yellow-50/50 backdrop-blur-sm rounded-xl p-4 mb-8">
+                <div class="flex items-center gap-2 text-yellow-700">
+                    <i class="fas fa-sticky-note"></i>
+                    <p class="text-sm font-medium">Order Notes</p>
+                </div>
+                <p class="text-sm text-yellow-600 mt-1 ml-6">${data.order.notes}</p>
+            </div>
+            `
+                : ""
+            }
+
+        </div>
         <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
             <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD] mb-6">Tracking Timeline</h2>
             <p class="text-gray-600 text-base md:text-sm font-semibold mb-6">
