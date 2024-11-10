@@ -570,9 +570,9 @@
             <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
                 <div>
                     <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD]">Order Details</h2>
-                    <p class="text-gray-500 text-sm mt-1">Track ID: ${
-                      data.order.waybill_number
-                    }</p>
+                   <!-- <p class="text-gray-500 text-sm mt-1">Track ID: ${
+                     data.order.waybill_number
+                   }</p> -->
                 </div>
                 <div class="flex gap-3">
                     <button 
@@ -594,6 +594,25 @@
 
             <!-- Order Information Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
+
+            <!-- Current Status -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-info-circle text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Current Status</p>
+                            <p class="font-semibold text-[#89B9AD]">${
+                              data.timeline[0]?.status?.name || "Processing"
+                            }</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 ml-11">Last Updated: ${
+                      data.timeline[0]?.date_time_ago || "Recently"
+                    }</p>
+                </div>
+
                 <!-- Customer Details -->
                 <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
                     <div class="flex items-center gap-3 mb-3">
@@ -680,24 +699,6 @@
                         </div>
                     </div>
                 <!--    <p class="text-sm text-gray-500 ml-11">Track your package status</p> -->
-                </div>
-
-                <!-- Current Status -->
-                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
-                            <i class="fas fa-info-circle text-[#89B9AD]"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500">Current Status</p>
-                            <p class="font-semibold text-[#89B9AD]">${
-                              data.timeline[0]?.status?.name || "Processing"
-                            }</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-500 ml-11">Last Updated: ${
-                      data.timeline[0]?.date_time_ago || "Recently"
-                    }</p>
                 </div>
             </div>
 
