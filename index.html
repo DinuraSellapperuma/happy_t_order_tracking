@@ -196,6 +196,7 @@
         transition: all 0.3s ease;
         position: relative;
         border: 2px solid #89b9ad;
+        flex-shrink: 0; /* Prevent dots from shrinking */
       }
 
       .timeline-dot.active {
@@ -221,27 +222,48 @@
       }
 
       .timeline-connector {
-        height: 2px;
-        background: linear-gradient(to right, #89b9ad 50%, #e5e7eb 50%);
-        background-size: 200% 100%;
-        background-position: right bottom;
+        width: 2px;
+        flex-grow: 1; /* Allow connector to fill space */
+        background: linear-gradient(to bottom, #89b9ad 50%, #e5e7eb 50%);
+        background-size: 100% 200%;
+        background-position: bottom;
         transition: all 0.5s ease;
-        min-width: 60px;
+        margin: 8px 0; /* Add some vertical spacing */
       }
 
       .timeline-connector.active {
-        background-position: left bottom;
+        background-position: top;
       }
 
       .status-card {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateX(20px);
         transition: all 0.5s ease;
+        height: 100%; /* Make cards fill height */
       }
 
       .status-card.active {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
+      }
+
+      .timeline-container {
+        display: flex;
+        min-height: 100%;
+      }
+
+      .timeline-dots-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 1rem;
+      }
+
+      .timeline-cards-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
 
       .notification {
@@ -307,11 +329,8 @@
 
       /* Timeline Scroll Improvements */
       .timeline-scroll {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding: 1rem 0;
+        overflow-x: visible;
+        padding: 0;
       }
 
       .timeline-scroll::-webkit-scrollbar {
@@ -319,8 +338,8 @@
       }
 
       .timeline-wrapper {
-        min-width: max-content;
-        padding: 0.5rem 0;
+        min-width: auto;
+        padding: 0;
       }
 
       @media (max-width: 768px) {
@@ -330,7 +349,7 @@
         }
 
         .timeline-connector {
-          min-width: 40px;
+          margin: 4px 0;
         }
       }
     </style>
@@ -364,7 +383,7 @@
           </div>
         </div>
         <h1 class="text-4xl md:text-5xl font-bold text-[#89B9AD] mb-4">
-          HAPPY T<br>Track Your Package
+          HAPPY T<br />Track Your Package
         </h1>
         <p class="text-gray-600 text-base md:text-lg">
           Peek-a-boo! Spot Your Package's Location 👀
@@ -490,90 +509,73 @@
         const trackingUrl = `${window.location.origin}${window.location.pathname}?tracking=${data.order.waybill_number}`;
 
         const orderDetails = `
-                <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
-                    <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
-                        <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD]">Order Details</h2>
-                        <button 
-                            onclick="copyTrackingUrl('${trackingUrl}')"
-                            class="copy-button bg-[#89B9AD]/10 hover:bg-[#89B9AD]/20 text-[#89B9AD] rounded-xl px-4 py-2 text-sm flex items-center gap-2 transition-all duration-300"
-                        >
-                            <i class="fas fa-share-alt"></i>
-                            Share Tracking
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                        <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
-                            <p class="text-sm text-gray-500">Tracking Number</p>
-                            <p class="text-base md:text-lg font-semibold text-[#89B9AD]">${
-                              data.order.waybill_number
-                            }</p>
-                        </div>
-                        <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
-                            <p class="text-sm text-gray-500">Customer</p>
-                            <p class="text-base md:text-lg font-semibold text-[#89B9AD]">${
-                              data.order.customer_name
-                            }</p>
-                        </div>
-                        <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
-                            <p class="text-sm text-gray-500">Package Weight</p>
-                            <p class="text-base md:text-lg font-semibold text-[#89B9AD]">${
-                              data.order.weight
-                            } kg</p>
-                        </div>
-                        <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
-                            <p class="text-sm text-gray-500">COD Amount</p>
-                            <p class="text-base md:text-lg font-semibold text-[#89B9AD]">${
-                              data.order.cod
-                            } LKR</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Keep your existing order details section unchanged -->
 
-                <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
-                    <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD] mb-6">Tracking Timeline</h2>
-                    <p class="text-gray-600 text-base md:text-sm font-semibold">
-          Follow Your Package's Happy Journey! 🦋
-        </p>
-                    <div class="timeline-scroll">
-                        <div class="timeline-wrapper flex justify-between items-center mb-8">
-                            ${data.timeline
-                              .map(
-                                (item, index) => `
-                                <div class="flex items-center">
-                                    <div class="timeline-dot w-8 h-8 md:w-10 md:h-10 rounded-full bg-white shadow-md"></div>
-                                    ${
-                                      index !== data.timeline.length - 1
-                                        ? `<div class="timeline-connector flex-1 mx-2 md:mx-4"></div>`
-                                        : ""
-                                    }
-                                </div>
-                            `
-                              )
-                              .join("")}
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        ${data.timeline
-                          .map(
-                            (item, index) => `
-                            <div class="status-card bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-6">
-                                <div class="flex flex-wrap justify-between items-start gap-2">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-[#89B9AD]"></div>
-                                        <h3 class="font-semibold text-[#89B9AD] text-base md:text-lg">${item.status.name}</h3>
-                                    </div>
-                                    <span class="text-sm text-gray-500">${item.date_time_ago}</span>
-                                </div>
-                                <p class="text-gray-600 text-sm md:text-base mt-2 ml-5">Updated by ${item.user.first_name} ${item.user.last_name}</p>
-                            </div>
-                        `
-                          )
-                          .join("")}
-                    </div>
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD] mb-6">Tracking Timeline</h2>
+            <p class="text-gray-600 text-base md:text-sm font-semibold mb-6">
+                Follow Your Package's Happy Journey! 🦋
+            </p>
+            <div class="timeline-container">
+                <!-- Timeline dots and connectors -->
+                <div class="timeline-dots-container">
+                    ${data.timeline
+                      .map(
+                        (item, index) => `
+                        <div class="timeline-dot w-8 h-8 md:w-10 md:h-10 rounded-full bg-white shadow-md"></div>
+                        ${
+                          index !== data.timeline.length - 1
+                            ? `<div class="timeline-connector"></div>`
+                            : ""
+                        }
+                    `
+                      )
+                      .join("")}
                 </div>
-            `;
+                
+                <!-- Status cards -->
+                <div class="timeline-cards-container space-y-4">
+                    ${data.timeline
+                      .map(
+                        (item) => `
+                        <div class="status-card bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-6">
+                            <div class="flex flex-wrap justify-between items-start gap-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#89B9AD]"></div>
+                                    <h3 class="font-semibold text-[#89B9AD] text-base md:text-lg">${item.status.name}</h3>
+                                </div>
+                                <span class="text-sm text-gray-500">${item.date_time_ago}</span>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base mt-2 ml-5">Updated by ${item.user.first_name} ${item.user.last_name}</p>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                </div>
+            </div>
+        </div>
+    `;
 
         resultDiv.innerHTML = orderDetails;
+
+        // Add this: Adjust timeline connector heights after render
+        setTimeout(adjustTimelineConnectors, 0);
+      }
+
+      // Add this new function to adjust connector heights
+      function adjustTimelineConnectors() {
+        const cards = document.querySelectorAll(".status-card");
+        const connectors = document.querySelectorAll(".timeline-connector");
+
+        connectors.forEach((connector, index) => {
+          if (cards[index] && cards[index + 1]) {
+            const cardHeight = cards[index].offsetHeight;
+            const spacing = parseInt(
+              window.getComputedStyle(cards[index]).marginBottom
+            );
+            connector.style.height = `${cardHeight + spacing}px`;
+          }
+        });
       }
 
       async function copyTrackingUrl(url) {
@@ -587,7 +589,7 @@
         }
       }
 
-      function animateTimeline() {
+      /* function animateTimeline() {
         const dots = document.querySelectorAll(".timeline-dot");
         const connectors = document.querySelectorAll(".timeline-connector");
         const cards = document.querySelectorAll(".status-card");
@@ -604,6 +606,31 @@
           }, index * 300);
         });
       }
+     */
+
+      function animateTimeline() {
+        const dots = document.querySelectorAll(".timeline-dot");
+        const connectors = document.querySelectorAll(".timeline-connector");
+        const cards = document.querySelectorAll(".status-card");
+
+        // Adjust connector heights before animation
+        adjustTimelineConnectors();
+
+        dots.forEach((dot, index) => {
+          setTimeout(() => {
+            dot.classList.add("active");
+            if (connectors[index]) {
+              connectors[index].classList.add("active");
+            }
+            if (cards[index]) {
+              cards[index].classList.add("active");
+            }
+          }, index * 300);
+        });
+      }
+
+      // Add window resize handler
+      window.addEventListener("resize", adjustTimelineConnectors);
 
       function showError(message) {
         const resultDiv = document.getElementById("result");
