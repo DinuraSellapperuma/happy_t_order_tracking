@@ -484,77 +484,6 @@
     </main>
 
     <script>
-      // This is like our sticker book - it tells us what each delivery status means
-      function getStatusExplanation(status) {
-        // Our sticker collection
-        const statusMappings = {
-          CONFIRMED: {
-            title: "Order Confirmed",
-            description: "Yay! We got your order! 🎉",
-            icon: "✅",
-          },
-          "RECEIVED TO ORIGIN WAREHOUSE": {
-            title: "Package Received",
-            description: "Your package arrived at our big house! 📦",
-            icon: "📦",
-          },
-          "DISPATCHED FROM ORIGIN WAREHOUSE": {
-            title: "Package is Traveling",
-            description:
-              "Your package is on a truck for delivery! Vroom vroom! 🚚",
-            icon: "🚚",
-          },
-          "RECEIVED AT DESTINATION WAREHOUSE": {
-            title: "Almost There",
-            description: "Your package is very close to your home! 🏠",
-            icon: "🏢",
-          },
-          "ASSIGNED TO DESTINATION RIDER": {
-            title: "Coming to You!",
-            description:
-              "Our friendly delivery person is bringing your package! 🚴",
-            icon: "🚴",
-          },
-          "RETURN TO DESTINATION WAREHOUSE": {
-            title: "Package Coming Back",
-            description:
-              "Oops! Your package is coming back to our house for a bit! 🏃",
-            icon: "↩️",
-          },
-          RESCHEDULED: {
-            title: "New Delivery Time",
-            description:
-              "We'll bring your package at a different time! Don't worry! ⏰",
-            icon: "📅",
-          },
-          CANCELLED: {
-            title: "Order Stopped",
-            description:
-              "Aw, this order was cancelled. Call us if you need help! 📞",
-            icon: "❌",
-          },
-          "PARTIALLY DELIVERED": {
-            title: "Some Items Delivered",
-            description: "We gave you some things! More coming soon! 🎁",
-            icon: "📬",
-          },
-          DELIVERED: {
-            title: "Yaaay! Delivered!",
-            description:
-              "Your package is home! Thank you for letting us bring it to you! 🌟",
-            icon: "🎁",
-          },
-        };
-
-        // If we don't have a sticker, use a simple one
-        return (
-          statusMappings[status] || {
-            title: status,
-            description: "Your package is moving!",
-            icon: "ℹ️",
-          }
-        );
-      }
       // Check for tracking number in URL on page load
       document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
@@ -630,16 +559,10 @@
         });
 
       function displayResults(data) {
-        const resultDiv = document.getElementById("result");
-        const trackingUrl = `${window.location.origin}${window.location.pathname}?tracking=${data.order.waybill_number}`;
+        console.log("Received data:", data); // Add this line to inspect the data structure
 
-        // Get current status info
-        const currentStatusInfo = data.timeline[0]
-          ? getStatusExplanation(data.timeline[0].status.name)
-          : {
-              title: "Processing",
-              icon: '<i class="fas fa-info-circle text-[#89B9AD]"></i>',
-            };
+        const resultDiv = document.getElementById("result");
+        const trackingUrl = `${window.location.origin}${window.location.pathname}?tracking=${data.order.waybill_number}`; // Remove .data
 
         const orderDetails = `
         <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
@@ -647,6 +570,9 @@
             <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
                 <div>
                     <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD]">Order Details</h2>
+                   <!-- <p class="text-gray-500 text-sm mt-1">Track ID: ${
+                     data.order.waybill_number
+                   }</p> -->
                 </div>
                 <div class="flex gap-3">
                     <button 
@@ -656,24 +582,29 @@
                         <i class="fas fa-share-alt"></i>
                         Share
                     </button>
+              <!--      <button 
+                        onclick="window.print()"
+                        class="bg-[#89B9AD]/10 hover:bg-[#89B9AD]/20 text-[#89B9AD] rounded-xl px-4 py-2 text-sm flex items-center gap-2 transition-all duration-300"
+                    >
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button> -->
                 </div>
             </div>
 
             <!-- Order Information Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
-                <!-- Current Status -->
+
+            <!-- Current Status -->
                 <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
                     <div class="flex items-center gap-3 mb-3">
                         <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
-                            ${currentStatusInfo.icon}
+                            <i class="fas fa-info-circle text-[#89B9AD]"></i>
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Current Status</p>
                             <p class="font-semibold text-[#89B9AD]">${
-                              currentStatusInfo.title
-                            }</p>
-                            <p class="text-xs text-gray-500">${
-                              data.timeline[0]?.status?.name || ""
+                              data.timeline[0]?.status?.name || "Processing"
                             }</p>
                         </div>
                     </div>
@@ -695,6 +626,9 @@
                             }</p>
                         </div>
                     </div>
+                <!--    <p class="text-sm text-gray-500 ml-11">${
+                  data.order.customer_address || "Address not available"
+                }</p> -->
                 </div>
 
                 <!-- Package Weight -->
@@ -710,6 +644,9 @@
                             } kg</p>
                         </div>
                     </div>
+              <!--      <p class="text-sm text-gray-500 ml-11">Package Type: ${
+                data.order.package_type || "Standard"
+              }</p> -->
                 </div>
 
                 <!-- Payment Details -->
@@ -725,6 +662,9 @@
                             } LKR</p>
                         </div>
                     </div>
+               <!--     <p class="text-sm text-gray-500 ml-11">Payment Status: ${
+                 data.order.payment_status || "Pending"
+               }</p> -->
                 </div>
 
                 <!-- Merchant/Sender Details -->
@@ -740,6 +680,9 @@
                             }</p>
                         </div>
                     </div>
+               <!--     <p class="text-sm text-gray-500 ml-11">${
+                 data.order.sender_address || "Main Branch"
+               }</p> -->
                 </div>
 
                 <!-- Tracking Number -->
@@ -755,29 +698,44 @@
                             }</p>
                         </div>
                     </div>
+                <!--    <p class="text-sm text-gray-500 ml-11">Track your package status</p> -->
                 </div>
             </div>
-        </div>
 
-        <!-- Timeline Section -->
+            <!-- Order Notes (if any) -->
+            ${
+              data.order.notes
+                ? `
+            <div class="bg-yellow-50/50 backdrop-blur-sm rounded-xl p-4 mb-8">
+                <div class="flex items-center gap-2 text-yellow-700">
+                    <i class="fas fa-sticky-note"></i>
+                    <p class="text-sm font-medium">Order Notes</p>
+                </div>
+                <p class="text-sm text-yellow-600 mt-1 ml-6">${data.order.notes}</p>
+            </div>
+            `
+                : ""
+            }
+
+        </div>
         <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
             <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD] mb-6">Tracking Timeline</h2>
             <p class="text-gray-600 text-base md:text-sm font-semibold mb-6">
                 Follow Your Package's Happy Journey! 🦋
             </p>
             <div class="timeline-container">
-                <!-- Timeline dots -->
+                <!-- Timeline dots and connectors -->
                 <div class="timeline-dots-container">
                     ${data.timeline
                       .map(
                         (item, index) => `
-                            <div class="timeline-dot w-8 h-8 md:w-10 md:h-10 rounded-full bg-white shadow-md"></div>
-                            ${
-                              index !== data.timeline.length - 1
-                                ? `<div class="timeline-connector"></div>`
-                                : ""
-                            }
-                        `
+                        <div class="timeline-dot w-8 h-8 md:w-10 md:h-10 rounded-full bg-white shadow-md"></div>
+                        ${
+                          index !== data.timeline.length - 1
+                            ? `<div class="timeline-connector"></div>`
+                            : ""
+                        }
+                    `
                       )
                       .join("")}
                 </div>
@@ -785,29 +743,20 @@
                 <!-- Status cards -->
                 <div class="timeline-cards-container space-y-4">
                     ${data.timeline
-                      .map((item) => {
-                        const statusInfo = getStatusExplanation(
-                          item.status.name
-                        );
-                        return `
-                                    <div class="status-card bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-6">
-                                        <div class="flex flex-wrap justify-between items-start gap-2">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-2.5 h-2.5 rounded-full bg-[#89B9AD]"></div>
-                                                <div>
-                                                    <h3 class="font-semibold text-[#89B9AD] text-base md:text-lg flex items-center gap-2">
-                                                        ${statusInfo.icon} ${statusInfo.title}
-                                                    </h3>
-                                                    <p class="text-sm text-gray-500">${item.status.name}</p>
-                                                </div>
-                                            </div>
-                                            <span class="text-sm text-gray-500">${item.date_time_ago}</span>
-                                        </div>
-                                        <p class="text-gray-600 text-sm md:text-base mt-2 ml-5">${statusInfo.description}</p>
-                                        <p class="text-gray-500 text-sm mt-2 ml-5">Updated by ${item.user.first_name} ${item.user.last_name}</p>
-                                    </div>
-                                `;
-                      })
+                      .map(
+                        (item) => `
+                        <div class="status-card bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-6">
+                            <div class="flex flex-wrap justify-between items-start gap-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-[#89B9AD]"></div>
+                                    <h3 class="font-semibold text-[#89B9AD] text-base md:text-lg">${item.status.name}</h3>
+                                </div>
+                                <span class="text-sm text-gray-500">${item.date_time_ago}</span>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base mt-2 ml-5">Updated by ${item.user.first_name} ${item.user.last_name}</p>
+                        </div>
+                    `
+                      )
                       .join("")}
                 </div>
             </div>
@@ -815,6 +764,8 @@
     `;
 
         resultDiv.innerHTML = orderDetails;
+
+        //Adjust timeline connector heights after render
         setTimeout(adjustTimelineConnectors, 0);
       }
 

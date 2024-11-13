@@ -484,75 +484,73 @@
     </main>
 
     <script>
+      // This is like our sticker book - it tells us what each delivery status means
       function getStatusExplanation(status) {
+        // Our sticker collection
         const statusMappings = {
-          "ASSIGNED TO DESTINATION RIDER": {
-            title: "Out for Delivery",
-            description:
-              "Your package has been assigned to a delivery rider in your area and is on its way to your delivery address.",
-            icon: "🚴",
-          },
-          "RECEIVED AT DESTINATION WAREHOUSE": {
-            title: "Arrived at Local Facility",
-            description:
-              "Your package has arrived at our local delivery facility nearest to your delivery address.",
-            icon: "🏢",
-          },
-          "DISPATCHED FROM ORIGIN WAREHOUSE": {
-            title: "In Transit",
-            description:
-              "Your package has left our initial warehouse and is en route to your local delivery facility.",
-            icon: "🚚",
+          CONFIRMED: {
+            title: "Order Confirmed",
+            description: "Yay! We got your order! 🎉",
+            icon: "✅",
           },
           "RECEIVED TO ORIGIN WAREHOUSE": {
             title: "Package Received",
-            description:
-              "We have received your package at our initial processing warehouse.",
+            description: "Your package arrived at our big house! 📦",
             icon: "📦",
           },
-          CONFIRMED: {
-            title: "Order Confirmed",
+          "DISPATCHED FROM ORIGIN WAREHOUSE": {
+            title: "Package is Traveling",
             description:
-              "Your order has been confirmed and is being processed for shipping.",
-            icon: "✅",
+              "Your package is on a truck for delivery! Vroom vroom! 🚚",
+            icon: "🚚",
+          },
+          "RECEIVED AT DESTINATION WAREHOUSE": {
+            title: "Almost There",
+            description: "Your package is very close to your home! 🏠",
+            icon: "🏢",
+          },
+          "ASSIGNED TO DESTINATION RIDER": {
+            title: "Coming to You!",
+            description:
+              "Our friendly delivery person is bringing your package! 🚴",
+            icon: "🚴",
           },
           "RETURN TO DESTINATION WAREHOUSE": {
-            title: "Returned to Warehouse",
+            title: "Package Coming Back",
             description:
-              "Your package has been returned to our local facility. Our team will process it according to return instructions.",
+              "Oops! Your package is coming back to our house for a bit! 🏃",
             icon: "↩️",
           },
           RESCHEDULED: {
-            title: "Delivery Rescheduled",
+            title: "New Delivery Time",
             description:
-              "Your delivery has been rescheduled. We will attempt delivery at the next available time.",
+              "We'll bring your package at a different time! Don't worry! ⏰",
             icon: "📅",
           },
           CANCELLED: {
-            title: "Order Cancelled",
+            title: "Order Stopped",
             description:
-              "This order has been cancelled. Please contact customer support if you have any questions.",
+              "Aw, this order was cancelled. Call us if you need help! 📞",
             icon: "❌",
           },
           "PARTIALLY DELIVERED": {
-            title: "Partially Delivered",
-            description:
-              "Part of your order has been delivered. Remaining items will be delivered separately.",
+            title: "Some Items Delivered",
+            description: "We gave you some things! More coming soon! 🎁",
             icon: "📬",
           },
-          // New Delivered status with special celebration message!
           DELIVERED: {
-            title: "Delivered Successfully! 🎉",
+            title: "Yaaay! Delivered!",
             description:
-              "Hooray! Your package has been delivered successfully. Thank you for shopping with us! 🌟",
+              "Your package is home! Thank you for letting us bring it to you! 🌟",
             icon: "🎁",
           },
         };
 
+        // If we don't have a sticker, use a simple one
         return (
           statusMappings[status] || {
             title: status,
-            description: "Package status updated",
+            description: "Your package is moving!",
             icon: "ℹ️",
           }
         );
