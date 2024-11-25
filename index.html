@@ -470,58 +470,58 @@
         const statusMappings = {
           CONFIRMED: {
             title: "Order Confirmed",
-            description: "Yay! We got your order! 🎉",
+            description: "Yay! We got your order! 🎉<br>Hi!🥰 ඔබේ පැකේජය ඩිලිවරි සඳහා අපට ලැබුණා! 🎉",
             icon: "🥰",
           },
           "RECEIVED TO ORIGIN WAREHOUSE": {
             title: "Package Received",
-            description: "Your package arrived at our big house! 📦",
+            description: "Your package arrived at our big house! 📦<br>ඔබේ පැකේජය අපගේ බෙදාහැරීමේ ගබඩාවට ලැබුණා! 📦",
             icon: "📦",
           },
           "DISPATCHED FROM ORIGIN WAREHOUSE": {
             title: "Package is Traveling",
             description:
-              "Your package is on a truck for delivery! Vroom vroom! 🚚",
+              "Your package is on a truck for delivery! Vroom vroom! 🚚<br>ඔබේ පැකේජය ඔබගේ ලඟම බෙදාහැරිමේ ගබඩාවට ලොරියක යනවා! වූම් වූම්! 🚚",
             icon: "🚚",
           },
           "RECEIVED AT DESTINATION WAREHOUSE": {
             title: "Almost There",
-            description: "Your package is very close to your home! 🏠",
+            description: "Your package is very close to your home! 🏠<br>ඔබේ පැකේජය ඔබේ නිවසට ඉතා ආසන්නයි! 🤭🏠",
             icon: "🏢",
           },
           "ASSIGNED TO DESTINATION RIDER": {
             title: "Coming to You!",
             description:
-              "Our friendly delivery person is bringing your package! 🚴",
+              "Our friendly delivery person is bringing your package! 🚴<br>අපේ බෙදාහරින්නා ඔබේ පැකේජය රැගෙන එනවා! ලෑස්තිවෙලා ඉන්නෙ 🤭🚴",
             icon: "🚴",
           },
           "RETURN TO DESTINATION WAREHOUSE": {
             title: "Package Coming Back",
             description:
-              "Oops! Your package is coming back to our house for a bit! 🏃",
+              "Oops! Your package is coming back to our house for a bit! 🏃<br>අපොයි! ඔබේ පැකේජය ටික වේලාවකට අපේ ගබඩාවට ආපසු ගේනවා! 🏃",
             icon: "↩️",
           },
           RESCHEDULED: {
             title: "New Delivery Time",
             description:
-              "We'll bring your package at a different time! Don't worry! ⏰",
+              "We'll bring your package at a different time! Don't worry! ⏰<br>අපි ඔබේ පැකේජය වෙනත් වේලාවක ගෙනෙනවා! තරහ වෙන්න එපා! ⏰",
             icon: "📅",
           },
           CANCELLED: {
             title: "Order Stopped",
             description:
-              "Aw, this order was cancelled. Call us if you need help! 📞",
+              "Aw, this order was cancelled. Message us if you need help! 📞 0767279728(Whatsapp)<br>මෙම ඇණවුම අවලංගු කරන ලදී. උදව් අවශ්‍ය නම් Message කරන්න! 📞0767279728(Whatsapp)",
             icon: "❌",
           },
           "PARTIALLY DELIVERED": {
             title: "Some Items Delivered",
-            description: "We gave you some things! More coming soon! 🎁",
+            description: "We gave you some things! More coming soon! 🎁<br>අපි ඔබට කීපයක් ලබා දී ඇත! ඉතුරුටික ඉක්මනින් එවන්නම්! 🎁",
             icon: "📬",
           },
           DELIVERED: {
             title: "Yaaay! Delivered!",
             description:
-              "Your package is home! Thank you for letting us bring it to you! 🌟",
+              "Your package is home! Thank you for letting us bring it to you! 🌟<br>ඔබේ පැකේජය ගෙදරටම අපි ගෙනාවා! අපව විශ්වාස කරාට ඔබට ස්තූතියි! 🌟",
             icon: "🎁",
           },
         };
@@ -530,7 +530,7 @@
         return (
           statusMappings[status] || {
             title: status,
-            description: "Your package is moving!",
+            description: "Your package is moving!<br>ඔබේ පැකේජය ගමන් කරමින් පවතී!",
             icon: "ℹ️",
           }
         );
