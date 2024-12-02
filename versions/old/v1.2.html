@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>Track Your Order - HAPPYT.LK</title>
+
+    <!-- Robots Meta -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Essential Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="title" content="HAPPY T • Track Your Order Status • HAPPYT.LK Package Tracking" />
+    <meta
+      name="description"
+      content="Track your HAPPYT.LK delivery status in real-time. Get instant updates on your package location, estimated delivery time, and complete shipping history with our order tracking system."
+    />
+    <meta name="keywords" content="order tracking, HAPPYT.LK tracking, delivery status, package tracking Sri Lanka, courier tracking" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HAPPYT.LK" />
+    <meta property="og:url" content="https://trackmyorder.happyt.lk" />
+    <meta property="og:title" content="Track Your Order Status | HAPPYT.LK Package Tracking" />
+    <meta
+      property="og:description"
+      content="Track your HAPPYT.LK delivery status in real-time. Get instant updates on your package location, estimated delivery time, and complete shipping history."
+    />
+
+    <!-- Open Graph Image Tags -->
+    <meta property="og:image" content="https://trackmyorder.happyt.lk/og-image.png" />
+    <meta property="og:image:secure_url" content="https://trackmyorder.happyt.lk/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="HAPPYT.LK Package Tracking Interface" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://trackmyorder.happyt.lk" />
+    <meta name="twitter:title" content="Track Your Order Status | HAPPYT.LK Package Tracking" />
+    <meta
+      name="twitter:description"
+      content="Track your HAPPYT.LK delivery status in real-time. Get instant updates on your package location, estimated delivery time, and complete shipping history."
+    />
+    <meta name="twitter:image" content="https://trackmyorder.happyt.lk/og-image.png" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://trackmyorder.happyt.lk" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png" />
+
+    <!-- Existing Style and Script imports -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "HappyT.lk Order Tracking",
+        "url": "https://trackmyorder.happyt.lk",
+        "description": "Track your HappyT.lk delivery status in real-time. Get instant updates on your package location, estimated delivery time, and complete shipping history.",
+        "applicationCategory": "Order Tracking System",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "LKR"
+        },
+        "provider": {
+          "@type": "Organization",
+          "name": "HappyT.lk",
+          "url": "https://happyt.lk"
+        },
+        "potentialAction": {
+          "@type": "TrackAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://trackmyorder.happyt.lk/?tracking={tracking_number}",
+            "description": "Track your order with tracking number"
+          },
+          "object": {
+            "@type": "ParcelDelivery",
+            "deliveryStatus": "http://schema.org/OrderStatus"
+          }
+        }
+      }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .blob {
+        position: absolute;
+        filter: blur(40px);
+        opacity: 0.5;
+        z-index: -1;
+        animation: blobAnimation 8s infinite ease;
+      }
+
+      @keyframes blobAnimation {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        25% {
+          transform: translate(5%, 5%) scale(1.1);
+        }
+        50% {
+          transform: translate(0, 10%) scale(1);
+        }
+        75% {
+          transform: translate(-5%, 5%) scale(0.9);
+        }
+      }
+
+      .timeline-dot {
+        transition: all 0.3s ease;
+        position: relative;
+        border: 2px solid #89b9ad;
+        flex-shrink: 0;
+      }
+
+      .timeline-dot.active {
+        transform: scale(1.1);
+        background-color: #89b9ad;
+      }
+
+      .timeline-dot::after {
+        content: "";
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease;
+      }
+
+      .timeline-dot.active::after {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .timeline-connector {
+        width: 2px;
+        flex-grow: 1; /* Allow connector to fill space */
+        background: linear-gradient(to bottom, #89b9ad 50%, #e5e7eb 50%);
+        background-size: 100% 200%;
+        background-position: bottom;
+        transition: all 0.5s ease;
+        margin: 8px 0; /* Add some vertical spacing */
+      }
+
+      .timeline-connector.active {
+        background-position: top;
+      }
+
+      .status-card {
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.5s ease;
+        height: 100%; /* Make cards fill height */
+      }
+
+      .status-card.active {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .timeline-container {
+        display: flex;
+        min-height: 100%;
+      }
+
+      .timeline-dots-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 1rem;
+      }
+
+      .timeline-cards-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .notification {
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .notification.show {
+        transform: translateY(0);
+      }
+
+      .copy-button {
+        position: relative;
+      }
+
+      .copy-button::after {
+        content: "Copied!";
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%) scale(0);
+        background-color: #89b9ad;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 10;
+      }
+
+      .copy-button.copied::after {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+      }
+
+      /* Responsive Search Container */
+      .search-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+      }
+
+      @media (min-width: 640px) {
+        .search-container {
+          flex-direction: row;
+          align-items: stretch;
+        }
+
+        .search-button {
+          min-width: 150px;
+          white-space: nowrap;
+        }
+      }
+
+      @media (max-width: 639px) {
+        .search-button {
+          width: 100%;
+          padding: 1rem;
+        }
+      }
+
+      /* Timeline Scroll Improvements */
+      .timeline-scroll {
+        overflow-x: visible;
+        padding: 0;
+      }
+
+      .timeline-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .timeline-wrapper {
+        min-width: auto;
+        padding: 0;
+      }
+
+      .footer {
+        background: rgba(255, 235, 216, 0.8); /* Matches #FFEBD8 background */
+        padding: 1.5rem 0;
+        position: relative;
+        margin-top: 3rem;
+        overflow: hidden;
+      }
+
+      /* blob */
+      .footer-blob {
+        position: absolute;
+        filter: blur(40px);
+        opacity: 0.5;
+        z-index: -1;
+        animation: blobAnimation 8s infinite ease;
+      }
+
+      .footer-blob-left {
+        background: #ffebd8;
+        width: 64px;
+        height: 64px;
+        top: 0;
+        left: 0;
+      }
+
+      .footer-blob-right {
+        background: #ffebd8;
+        width: 96px;
+        height: 96px;
+        bottom: 0;
+        right: 0;
+      }
+
+      .footer-content {
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .footer-icon {
+        display: inline-block;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes footerFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .timeline-dot {
+          width: 24px !important;
+          height: 24px !important;
+        }
+
+        .timeline-connector {
+          margin: 4px 0;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[#FFEBD8] relative overflow-x-hidden">
+    <!-- Notification Banner -->
+
+    <div id="notification" class="notification fixed top-0 left-0 right-0 bg-[#89B9AD] text-white py-3 z-50">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-sm md:text-base">
+          <i class="fas fa-link mr-2"></i>
+          Tracking via shared link
+        </p>
+      </div>
+    </div>
+
+    <!-- Background Blobs -->
+    <div class="blob bg-[#FFEBD8] w-64 h-64 top-0 left-0"></div>
+    <div class="blob bg-[#FFEBD8] w-96 h-96 bottom-0 right-0"></div>
+
+    <main class="container mx-auto px-4 py-12 relative">
+      <!-- Hero Section -->
+      <div class="max-w-4xl mx-auto text-center mb-16">
+        <div class="float mb-8">
+          <div class="w-16 h-16 md:w-20 md:h-20 bg-[#89B9AD] rounded-full flex items-center justify-center mx-auto text-white">
+            <i class="fas fa-box-open text-2xl md:text-3xl"></i>
+          </div>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-[#89B9AD] mb-4">HAPPY T<br />Track Your Package</h1>
+        <p class="text-gray-600 text-base md:text-lg">Peek-a-boo! Spot Your Package's Location 👀</p>
+      </div>
+
+      <!-- Search Form -->
+      <div class="max-w-2xl mx-auto bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+        <form id="trackingForm">
+          <div class="search-container">
+            <input
+              type="text"
+              id="waybill_number"
+              class="w-full bg-white/50 backdrop-blur-sm border-2 border-[#89B9AD]/30 rounded-xl px-4 py-3 text-base focus:outline-none focus:border-[#89B9AD] transition-all duration-300"
+              placeholder="Enter your tracking number"
+            />
+            <button
+              type="submit"
+              class="search-button bg-[#89B9AD] text-white rounded-xl px-6 hover:bg-[#7AA99D] transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-search"></i>
+              <span>Track Now</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Loading Animation -->
+      <div id="loader" class="hidden">
+        <div class="flex flex-col items-center justify-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 md:h-16 md:w-16 border-4 border-[#89B9AD] border-t-transparent"></div>
+          <p class="mt-4 text-gray-600 animate-pulse text-base md:text-lg">Tracking your package...</p>
+        </div>
+      </div>
+
+      <!-- Results Container -->
+      <div id="result" class="max-w-4xl mx-auto space-y-8"></div>
+    </main>
+
+    <script>
+      // This is like our sticker book - it tells us what each delivery status means
+      function getStatusExplanation(status) {
+        // Our sticker collection
+        const statusMappings = {
+          CONFIRMED: {
+            title: "Order Confirmed",
+            description: "Yay! We got your order! 🎉<br>Hi!🥰 ඔබේ පැකේජය ඩිලිවරි සඳහා අපට ලැබුණා! 🎉",
+            icon: "🥰",
+          },
+          "RECEIVED TO ORIGIN WAREHOUSE": {
+            title: "Package Received",
+            description: "Your package arrived at our big house! 📦<br>ඔබේ පැකේජය අපගේ බෙදාහැරීමේ ගබඩාවට ලැබුණා! 📦",
+            icon: "📦",
+          },
+          "DISPATCHED FROM ORIGIN WAREHOUSE": {
+            title: "Package is Traveling",
+            description:
+              "Your package is on a truck for delivery! Vroom vroom! 🚚<br>ඔබේ පැකේජය ඔබගේ ලඟම බෙදාහැරිමේ ගබඩාවට ලොරියක යනවා! වූම් වූම්! 🚚",
+            icon: "🚚",
+          },
+          "RECEIVED AT DESTINATION WAREHOUSE": {
+            title: "Almost There",
+            description: "Your package is very close to your home! 🏠<br>ඔබේ පැකේජය ඔබේ නිවසට ඉතා ලඟම ගබඩාවේ තියෙන්නේ! 🤭🏠",
+            icon: "🏢",
+          },
+          "ASSIGNED TO DESTINATION RIDER": {
+            title: "Coming to You!",
+            description: "Our friendly delivery person is bringing your package! 🚴<br>අපේ බෙදාහරින්නා ඔබේ පැකේජය රැගෙන අද දවස ඇතුලත එනවා! ලෑස්තිවෙලා ඉන්න 🤭🚴",
+            icon: "🚴",
+          },
+          "RETURN TO DESTINATION WAREHOUSE": {
+            title: "Package Coming Back",
+            description: "Oops! Your package is coming back to our house for a bit! 🏃<br>අපොයි! ඔබේ පැකේජය ටික වේලාවකට අපේ ගබඩාවට ආපසු ගේනවා! 🏃",
+            icon: "↩️",
+          },
+          RESCHEDULED: {
+            title: "New Delivery Time",
+            description: "We'll bring your package at a different time! Don't worry! ⏰<br>අපි ඔබේ පැකේජය වෙනත් වේලාවක ගෙනෙනවා! තරහ වෙන්න එපා! ⏰",
+            icon: "📅",
+          },
+          CANCELLED: {
+            title: "Order Stopped",
+            description:
+              "Aw, this order was cancelled. Message us if you need help! 📞 0767279728(Whatsapp)<br>මෙම ඇණවුම අවලංගු කරන ලදී. උදව් අවශ්‍ය නම් Message කරන්න! 📞0767279728(Whatsapp)",
+            icon: "❌",
+          },
+          "PARTIALLY DELIVERED": {
+            title: "Some Items Delivered",
+            description: "We gave you some things! More coming soon! 🎁<br>අපි ඔබට කීපයක් ලබා දී ඇත! ඉතුරුටික ඉක්මනින් එවන්නම්! 🎁",
+            icon: "📬",
+          },
+          DELIVERED: {
+            title: "Yaaay! Delivered!",
+            description:
+              "Your package is home! Thank you for letting us bring it to you! 🌟<br>ඔබේ පැකේජය ගෙදරටම අපි ගෙනාවා! අපව විශ්වාස කරාට ඔබට ස්තූතියි! 🌟",
+            icon: "🏠",
+          },
+        };
+
+        // If we don't have a sticker, use a simple one
+        return (
+          statusMappings[status] || {
+            title: status,
+            description: "Your package is moving!<br>ඔබේ පැකේජය ගමන් කරමින් පවතී!",
+            icon: "ℹ️",
+          }
+        );
+      }
+      // Check for tracking number in URL on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const trackingNumber = urlParams.get("tracking");
+
+        if (trackingNumber) {
+          document.getElementById("waybill_number").value = trackingNumber;
+          document.getElementById("notification").classList.add("show");
+          setTimeout(() => {
+            document.getElementById("trackingForm").dispatchEvent(new Event("submit"));
+          }, 500);
+        }
+      });
+
+      document.getElementById("trackingForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const waybillNumber = document.getElementById("waybill_number").value.trim();
+        const resultDiv = document.getElementById("result");
+        const loader = document.getElementById("loader");
+
+        if (!waybillNumber) {
+          showError("Please enter a tracking number");
+          return;
+        }
+
+        //URL with tracking number
+        const newUrl = `${window.location.pathname}?tracking=${waybillNumber}`;
+        window.history.pushState({ tracking: waybillNumber }, "", newUrl);
+
+        try {
+          resultDiv.innerHTML = "";
+          loader.classList.remove("hidden");
+
+          const response = await fetch("https://v1.api.curfox.com/api/public/order/tracking-info", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "X-tenant": "royalexpress",
+            },
+            body: JSON.stringify({ waybill_number: waybillNumber }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || "Failed to fetch tracking information");
+          }
+
+          if (data?.data?.timeline?.length > 0) {
+            displayResults(data.data);
+            setTimeout(animateTimeline, 100);
+          } else {
+            showError("No tracking information found");
+          }
+        } catch (error) {
+          showError(error.message);
+        } finally {
+          loader.classList.add("hidden");
+        }
+      });
+
+      function displayResults(data) {
+        const resultDiv = document.getElementById("result");
+        const trackingUrl = `${window.location.origin}${window.location.pathname}?tracking=${data.order.waybill_number}`;
+
+        // Get current status info
+        const currentStatusInfo = data.timeline[0]
+          ? getStatusExplanation(data.timeline[0].status.name)
+          : {
+              title: "Processing",
+              icon: '<i class="fas fa-info-circle text-[#89B9AD]"></i>',
+            };
+
+        const orderDetails = `
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD]">Order Details</h2>
+                    <h4 class="text-l md:text-2l font-bold text-[#89B9AD]">පැකේජයේ තවත් විස්තර සඳහා පහතටම යන්න 😉🤭</h4>
+                </div>
+                <div class="flex gap-3">
+                    <button 
+                        onclick="copyTrackingUrl('${trackingUrl}')"
+                        class="copy-button bg-[#89B9AD]/10 hover:bg-[#89B9AD]/20 text-[#89B9AD] rounded-xl px-4 py-2 text-sm flex items-center gap-2 transition-all duration-300"
+                    >
+                        <i class="fas fa-share-alt"></i>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order Information Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
+                <!-- Current Status -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            ${currentStatusInfo.icon}
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Current Status</p>
+                            <p class="font-semibold text-[#89B9AD]">${currentStatusInfo.title}</p>
+                            <p class="text-xs text-gray-500">${data.timeline[0]?.status?.name || ""}</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 ml-11">Last Updated: ${data.timeline[0]?.date_time_ago || "Recently"}</p>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Customer</p>
+                            <p class="font-semibold text-[#89B9AD]">${data.order.customer_name}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package Weight -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-box text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Package Weight</p>
+                            <p class="font-semibold text-[#89B9AD]">${data.order.weight} kg</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-money-bill text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Payable amount</p>
+                            <p class="font-semibold text-[#89B9AD]">COD: ${data.order.cod} LKR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Merchant/Sender Details -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-store text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Store</p>
+                            <p class="font-semibold text-[#89B9AD]">${data.order.merchant || "Happy T Store"}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tracking Number -->
+                <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-[#89B9AD]/10 rounded-full flex items-center justify-center">
+                            <i class="fas fa-barcode text-[#89B9AD]"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Tracking Number</p>
+                            <p class="font-semibold text-[#89B9AD]">${data.order.waybill_number}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-xl md:text-2xl font-bold text-[#89B9AD] mb-6">Tracking Timeline</h2>
+            <p class="text-gray-600 text-base md:text-sm font-semibold mb-6">
+                Follow Your Package's Happy Journey! 🦋
+            </p>
+            <div class="timeline-container">
+                <!-- Timeline dots -->
+                <div class="timeline-dots-container">
+                    ${data.timeline
+                      .map(
+                        (item, index) => `
+                            <div class="timeline-dot w-8 h-8 md:w-10 md:h-10 rounded-full bg-white shadow-md"></div>
+                            ${index !== data.timeline.length - 1 ? `<div class="timeline-connector"></div>` : ""}
+                        `
+                      )
+                      .join("")}
+                </div>
+                
+                <!-- Status cards -->
+                <div class="timeline-cards-container space-y-4">
+                    ${data.timeline
+                      .map((item) => {
+                        const statusInfo = getStatusExplanation(item.status.name);
+                        return `
+                                    <div class="status-card bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-6">
+                                        <div class="flex flex-wrap justify-between items-start gap-2">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-[#89B9AD]"></div>
+                                                <div>
+                                                    <h3 class="font-semibold text-[#89B9AD] text-base md:text-lg flex items-center gap-2">
+                                                        ${statusInfo.icon} ${statusInfo.title}
+                                                    </h3>
+                                                    <p class="text-sm text-gray-500">${item.status.name}</p>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">${item.date_time_ago}</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm md:text-base mt-2 ml-5">${statusInfo.description}</p>
+                                        <p class="text-gray-500 text-sm mt-2 ml-5">Updated by ${item.user.first_name} ${item.user.last_name}</p>
+                                    </div>
+                                `;
+                      })
+                      .join("")}
+                </div>
+            </div>
+        </div>
+    `;
+
+        resultDiv.innerHTML = orderDetails;
+        setTimeout(adjustTimelineConnectors, 0);
+      }
+
+      //function to adjust connector heights
+      function adjustTimelineConnectors() {
+        const cards = document.querySelectorAll(".status-card");
+        const connectors = document.querySelectorAll(".timeline-connector");
+
+        connectors.forEach((connector, index) => {
+          if (cards[index] && cards[index + 1]) {
+            const cardHeight = cards[index].offsetHeight;
+            const spacing = parseInt(window.getComputedStyle(cards[index]).marginBottom);
+            connector.style.height = `${cardHeight + spacing}px`;
+          }
+        });
+      }
+
+      async function copyTrackingUrl(url) {
+        try {
+          await navigator.clipboard.writeText(url);
+          const button = document.querySelector(".copy-button");
+          button.classList.add("copied");
+          setTimeout(() => button.classList.remove("copied"), 2000);
+        } catch (err) {
+          console.error("Failed to copy URL:", err);
+        }
+      }
+
+      /* function animateTimeline() {
+        const dots = document.querySelectorAll(".timeline-dot");
+        const connectors = document.querySelectorAll(".timeline-connector");
+        const cards = document.querySelectorAll(".status-card");
+
+        dots.forEach((dot, index) => {
+          setTimeout(() => {
+            dot.classList.add("active");
+            if (connectors[index]) {
+              connectors[index].classList.add("active");
+            }
+            if (cards[index]) {
+              cards[index].classList.add("active");
+            }
+          }, index * 300);
+        });
+      }
+     */
+
+      function animateTimeline() {
+        const dots = document.querySelectorAll(".timeline-dot");
+        const connectors = document.querySelectorAll(".timeline-connector");
+        const cards = document.querySelectorAll(".status-card");
+
+        // Adjust connector heights before animation
+        adjustTimelineConnectors();
+
+        dots.forEach((dot, index) => {
+          setTimeout(() => {
+            dot.classList.add("active");
+            if (connectors[index]) {
+              connectors[index].classList.add("active");
+            }
+            if (cards[index]) {
+              cards[index].classList.add("active");
+            }
+          }, index * 300);
+        });
+      }
+
+      // Add window resize handler
+      window.addEventListener("resize", adjustTimelineConnectors);
+
+      function showError(message) {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `
+                <div class="bg-red-50/80 backdrop-blur-lg border-l-4 border-red-400 p-4 md:p-6 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-exclamation-circle text-red-500"></i>
+                        <p class="text-red-700">${message}</p>
+                    </div>
+                </div>
+            `;
+      }
+
+      // Handle browser back/forward navigation
+      window.addEventListener("popstate", function (event) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const trackingNumber = urlParams.get("tracking");
+
+        if (trackingNumber) {
+          document.getElementById("waybill_number").value = trackingNumber;
+          document.getElementById("trackingForm").dispatchEvent(new Event("submit"));
+        } else {
+          // Clear the form and results if no tracking number in URL
+          document.getElementById("waybill_number").value = "";
+          document.getElementById("result").innerHTML = "";
+          document.getElementById("notification").classList.remove("show");
+        }
+      });
+
+      // Auto-hide notification banner after 5 seconds
+      setTimeout(() => {
+        const notification = document.getElementById("notification");
+        if (notification.classList.contains("show")) {
+          notification.classList.remove("show");
+        }
+      }, 5000);
+    </script>
+  </body>
+  <footer class="footer">
+    <!-- blobs -->
+    <div class="footer-blob footer-blob-left"></div>
+    <div class="footer-blob footer-blob-right"></div>
+
+    <div class="container mx-auto px-4">
+      <div class="footer-content text-center">
+        <!-- Icon -->
+        <div class="mb-4">
+          <div class="w-10 h-10 bg-[#89B9AD] rounded-full flex items-center justify-center mx-auto text-white footer-icon">
+            <i class="fas fa-box-open text-lg"></i>
+          </div>
+        </div>
+        <!-- Copyright -->
+        <p class="text-gray-600">© ${new Date().getFullYear()} HAPPYT.LK. All rights reserved.</p>
+        <p class="text-sm text-[#89B9AD] mt-2 font-medium">Made with <i class="fas fa-heart mx-1"></i> in Sri Lanka</p>
+        <p class="text-sm text-[#89B9AD] mt-2 font-medium">
+          Develop by
+          <a href="https://dinurasellapperuma.com" class="font-bold" target="_blank">D I X Y</a>
+        </p>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Auto Update copyright year
+        const yearElements = document.querySelectorAll(".footer-content");
+        yearElements.forEach((element) => {
+          element.innerHTML = element.innerHTML.replace("${new Date().getFullYear()}", new Date().getFullYear());
+        });
+      });
+    </script>
+  </footer>
+</html>
