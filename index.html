@@ -596,7 +596,7 @@
 
           //URL with tracking number
           const newUrl = `${window.location.pathname}?luv=${waybillNumber}`;
-          window.history.pushState({ tracking: waybillNumber }, "", newUrl);
+          window.history.pushState({ luv: waybillNumber }, "", newUrl);
 
           try {
             resultDiv.innerHTML = "";
