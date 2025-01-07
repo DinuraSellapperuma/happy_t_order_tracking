@@ -148,7 +148,7 @@
           "@type": "TrackAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://trackmyorder.happyt.lk?you={tracking_number}",
+            "urlTemplate": "https://trackmyorder.happyt.lk/?luv={tracking_number}",
             "description": "Track your order with tracking number"
           },
           "object": {
@@ -565,7 +565,7 @@
       // Check for tracking number in URL on page load
       document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        const trackingNumber = urlParams.get("you");
+        const trackingNumber = urlParams.get("luv");
 
         if (trackingNumber) {
           document.getElementById("waybill_number").value = trackingNumber;
@@ -595,8 +595,8 @@
           }
 
           //URL with tracking number
-          const newUrl = `${window.location.pathname}?you=${waybillNumber}`;
-          window.history.pushState({ you: waybillNumber }, "", newUrl);
+          const newUrl = `${window.location.pathname}?luv=${waybillNumber}`;
+          window.history.pushState({ luv: waybillNumber }, "", newUrl);
 
           try {
             resultDiv.innerHTML = "";
@@ -638,7 +638,7 @@
 
       function displayResults(data) {
         const resultDiv = document.getElementById("result");
-        const trackingUrl = `${window.location.origin}${window.location.pathname}?you=${data.order.waybill_number}`;
+        const trackingUrl = `${window.location.origin}${window.location.pathname}?luv=${data.order.waybill_number}`;
 
         // Get current status info
         const currentStatusInfo = data.timeline[0]
@@ -959,7 +959,7 @@
       // Handle browser back/forward navigation
       window.addEventListener("popstate", function (event) {
         const urlParams = new URLSearchParams(window.location.search);
-        const trackingNumber = urlParams.get("you");
+        const trackingNumber = urlParams.get("luv");
 
         if (trackingNumber) {
           document.getElementById("waybill_number").value = trackingNumber;
